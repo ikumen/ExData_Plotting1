@@ -36,7 +36,10 @@
 df <- read.table(file = "household_power_consumption.txt", sep = ";",
                  na.strings=c("?"), 
                  header=TRUE, 
-                 colClasses = c(Global_active_power="numeric"))
+                 colClasses = c(
+                    Sub_metering_1="numeric",
+                    Sub_metering_2="numeric",
+                    Sub_metering_3="numeric"))
 
 # convert char date col to Date obj so can do comparisons
 df$DateFilter <- as.Date(df$Date, "%d/%m/%Y")
@@ -48,20 +51,30 @@ end_date = as.Date("2007-02-02")
 # note: our filter is inclusive on begin and end dates, and 
 # we only want observations with !NA
 df <- df[((df$DateFilter >= begin_date & df$DateFilter <= end_date) & 
-             !is.na(df$Global_active_power)), 
+             (!is.na(df$Sub_metering_1) & !is.na(df$Sub_metering_2) & !is.na(df$Sub_metering_3))), 
          # attrs needed for this plot
-         c("Global_active_power", "Date", "Time")] 
+         c("Date", "Time", "Sub_metering_1","Sub_metering_2","Sub_metering_3")] 
 
 df$DateTime <- strptime(paste(df$Date, df$Time), "%d/%m/%Y %H:%M:%S")
 
 # open png device for writing to
-png(file = "plot2.png", width = 480, height = 480)
+png(file = "plot3.png", width = 480, height = 480)
 
 # create plot
-plot(df$DateTime, df$Global_active_power, 
-     type = "l", 
-     xlab = "", 
-     ylab = "Global Active Power (kilowatts)")
+with(df, plot(df$DateTime, df$Sub_metering_1, 
+              type = "l", 
+              xlab = "", 
+              ylab = "Energy sub metering"))
+
+with(df, points(df$DateTime, df$Sub_metering_2, 
+                type="l", col="red"))
+
+with(df, points(df$DateTime, df$Sub_metering_3, 
+                type="l", col="blue"))
+
+legend("topright", lty = c(1,1,1), lwd = 2, 
+       col = c("black", "red", "blue"), 
+       legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 
 # close device
 dev.off()
