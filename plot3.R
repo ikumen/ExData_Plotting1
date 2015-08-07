@@ -24,9 +24,9 @@
 #
 # Description
 #
-# Generates a base plot for "Global Active Power" vs. day values taken from 
-# UC Irvine Machine Learning Repository, specifically the "Electric power 
-# consumption" dataset.
+# Generates multiple base plots for values taken from UC Irvine Machine 
+# Learning Repository, specifically the "Electric power consumption" dataset. 
+# See https://github.com/rdpeng/ExData_Plotting1 plot 3 for an example.
 #
 # Note: this script assumes "household_power_consumption.txt" data file
 # is within the same directory as this script. 
@@ -55,22 +55,19 @@ df <- df[((df$DateFilter >= begin_date & df$DateFilter <= end_date) &
          # attrs needed for this plot
          c("Date", "Time", "Sub_metering_1","Sub_metering_2","Sub_metering_3")] 
 
+
+# concatenate the Date + Time columns, then use it to create Date 
 df$DateTime <- strptime(paste(df$Date, df$Time), "%d/%m/%Y %H:%M:%S")
 
 # open png device for writing to
 png(file = "plot3.png", width = 480, height = 480)
 
-# create plot
-with(df, plot(df$DateTime, df$Sub_metering_1, 
-              type = "l", 
-              xlab = "", 
+# create plot starting with base
+with(df, plot(df$DateTime, df$Sub_metering_1, type = "l", xlab = "", 
               ylab = "Energy sub metering"))
-
-with(df, points(df$DateTime, df$Sub_metering_2, 
-                type="l", col="red"))
-
-with(df, points(df$DateTime, df$Sub_metering_3, 
-                type="l", col="blue"))
+# add additional sub metering data to existing plot
+with(df, points(df$DateTime, df$Sub_metering_2, type="l", col="red"))
+with(df, points(df$DateTime, df$Sub_metering_3, type="l", col="blue"))
 
 legend("topright", lty = c(1,1,1), lwd = 2, 
        col = c("black", "red", "blue"), 

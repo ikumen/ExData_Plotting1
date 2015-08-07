@@ -24,9 +24,9 @@
 #
 # Description
 #
-# Generates a base plot for "Global Active Power" vs. day values taken from 
-# UC Irvine Machine Learning Repository, specifically the "Electric power 
-# consumption" dataset.
+# Generates multiple base plots for values taken from UC Irvine Machine 
+# Learning Repository, specifically the "Electric power consumption" dataset. 
+# See https://github.com/rdpeng/ExData_Plotting1 plot 2 for an example.
 #
 # Note: this script assumes "household_power_consumption.txt" data file
 # is within the same directory as this script. 

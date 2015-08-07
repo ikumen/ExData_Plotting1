@@ -24,9 +24,9 @@
 #
 # Description
 #
-# Generates a base plot for "Global Active Power" vs. day values taken from 
-# UC Irvine Machine Learning Repository, specifically the "Electric power 
-# consumption" dataset.
+# Generates multiple base plots for values taken from UC Irvine Machine 
+# Learning Repository, specifically the "Electric power consumption" dataset. 
+# See https://github.com/rdpeng/ExData_Plotting1 plot 4 for an example.
 #
 # Note: this script assumes "household_power_consumption.txt" data file
 # is within the same directory as this script. 
@@ -59,6 +59,7 @@ df <- df[((df$DateFilter >= begin_date & df$DateFilter <= end_date) &
          c("Date", "Time", "Sub_metering_1","Sub_metering_2","Sub_metering_3",
            "Global_reactive_power", "Global_active_power", "Voltage")] 
 
+# concatenate the Date + Time columns, then use it to create Date 
 df$DateTime <- strptime(paste(df$Date, df$Time), "%d/%m/%Y %H:%M:%S")
 
 # open png device for writing to
@@ -69,7 +70,7 @@ par(mfrow = c(2,2))
 plot(df$DateTime, df$Global_active_power, 
      type = "l", 
      xlab = "", 
-     ylab = "Global Active Power (kilowatts)")
+     ylab = "Global Active Power")
 
 plot(df$DateTime, df$Voltage, 
      type = "l", 

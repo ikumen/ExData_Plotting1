@@ -27,6 +27,7 @@
 # Generates a histogram for "Global Active Power" values taken from UC Irvine
 # Machine Learning Repository, specifically the "Electric power consumption"
 # dataset.
+# See https://github.com/rdpeng/ExData_Plotting1 plot 1 for an example.
 #
 # Note: this script assumes "household_power_consumption.txt" data file
 # is within the same directory as this script. 
